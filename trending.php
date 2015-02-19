@@ -73,9 +73,9 @@ class trending_posts extends WP_Widget {
 			'trending_posts', // Base ID
 			__( 'Trending Posts', 'text_domain' ), // Name
 			array( 'description' => __( 'Displays the 5 most popular posts', 'text_domain' ), ) // Args
-		);
+		);               
 	}
-
+        
 	/**
 	 * Front-end display of widget.
 	 *
@@ -85,6 +85,7 @@ class trending_posts extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
+                wp_enqueue_style( 'trending-style', plugins_url('trending.css', __FILE__) );
 		echo $args['before_widget'];
 		if ( ! empty( $instance['title'] ) ) {
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
@@ -112,8 +113,9 @@ class trending_posts extends WP_Widget {
                                 $the_query->the_post();
                                 $trending_num++;
                                 echo '<li>';
-                                echo '<a href="' . get_the_permalink() . '" rel="bookmarak">';
-                                echo $trending_num . '.' . '  ';
+                                echo '<span class="trend-num">' . $trending_num . '</span>';
+                                echo '<a href="' . get_the_permalink() . '" rel="bookmarak" class="trend-entry">';
+                                // echo $trending_num . '.' . '  ';
                                 echo get_the_title();
                                 // echo ' (' . (int) get_post_meta(get_the_ID(), 'views', true ) . ')';
                                 echo '</a>';
